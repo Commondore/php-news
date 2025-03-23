@@ -1,0 +1,11 @@
+RewriteEngine On
+RewriteBase /news.kg/
+
+# Удаляем /news.kg из URI перед передачей в index.php
+RewriteCond %{REQUEST_URI} ^/news\.kg/(.*)$
+RewriteRule ^news\.kg/(.*)$ $1 [L]
+
+# Если файл или папка не существует, отправляем запрос в index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
