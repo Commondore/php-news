@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Новости Кыргызстана{% endblock %}</title>
+    <link rel="stylesheet" href="/news.kg/assets/css/style.css">
+    {% block styles %}{% endblock %}
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/news.kg">Главная</a>
+            {% if user %}
+                <a href="/news.kg/profile">Профиль</a>
+                <a href="/news.kg/logout">Выйти</a>
+            {% else %}
+                <a href="/news.kg/login">Войти</a>
+                <a href="/news.kg/register">Регистрация</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; {{ "now"|date("Y") }} Новости Кыргызстана. Все права защищены.</p>
+    </footer>
+
+    <script src="/news.kg/assets/js/main.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
