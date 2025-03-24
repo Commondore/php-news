@@ -1,10 +1,14 @@
 <?php
 
-use App\Controllers\UserController;
 use Phroute\Phroute\RouteCollector;
+use App\Controllers\UserController;
+use App\Controllers\HomeController;
 
 $router = new RouteCollector();
 
-$router->get('/', [UserController::class, 'index']);
+$router->get('/', [HomeController::class, 'index']);
+
+$router->get('/users', [UserController::class, 'index']);
+
 
 return $router;
