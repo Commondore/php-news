@@ -1,0 +1,12 @@
+{% extends 'layouts/base.twig' %}
+
+{% block content %}
+<div>
+    <h1>Регистрация</h1>
+
+    <form action="/news.kg/register" method="post">
+        <input type="text" name="name" placeholder="enter name" value="{{ user.name }}">
+        <button>Отправить</button>
+    </form>
+</div>
+{% endblock %}
