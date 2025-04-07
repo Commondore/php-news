@@ -24,13 +24,32 @@ class UserController
 
   public function register()
   {
+    if($_SERVER['REQUEST_METHOD'] === 'GET') {
+      View::render('users/register.twig', [
+        'name' => '',
+        'email' => '',
+        'errors' => []
+      ]);
+      return;
+    }
+
     $name = $_POST['name'] ?? null;
     $email = $_POST['email'] ?? null;
     $password = $_POST['password'] ?? null;
 
-    View::render('users/register.twig', ['user' => [
-      'name' => $name,
-      'email' => $email,
-    ]]);
+
+    $errors = $this->registerValidator->validate($_POST);
+
+    if(empty($errors)) {
+      //      createUser
+      header('Location: /news.kg/login');
+    }
+
+
+    View::render('users/register.twig', [
+      'name' => $name ?? '',
+      'email' => $email ?? '',
+      'errors' => $errors
+    ]);
   }
 }
