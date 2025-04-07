@@ -20,6 +20,9 @@
             </div>
             <div class="mb-4">
                 <input class="input" type="password" name="password" placeholder="Введите пароль">
+                {% if errors.password %}
+                    <p class="text-red-600 text-sm mt-1 ml-2">{{ errors.password }}</p>
+                {% endif %}
             </div>
             <button class="btn w-full">Отправить</button>
         </form>

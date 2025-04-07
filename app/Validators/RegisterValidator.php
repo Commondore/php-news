@@ -8,6 +8,7 @@ class RegisterValidator implements ValidatorInterface {
 
   public function validate(array $data): array
   {
+    $this->validateName($data['name']);
     $this->validateEmail($data['email']);
     $this->validatePassword($data['password']);
 
@@ -22,6 +23,13 @@ class RegisterValidator implements ValidatorInterface {
   public function getError(string $field): string
   {
     return $this->errors[$field] ?? '';
+  }
+
+  private function validateName(?string $name): void
+  {
+    if(empty($name)) {
+      $this->errors['name'] = 'Имя пользователя обязательно';
+    }
   }
 
   private function validateEmail(?string $email): void

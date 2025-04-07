@@ -41,8 +41,10 @@ class UserController
     $errors = $this->registerValidator->validate($_POST);
 
     if(empty($errors)) {
-      //      createUser
-      header('Location: /news.kg/login');
+      $user = $this->userModel->createUser($name, $email, $password);
+      if($user) {
+        header('Location: /news.kg/login');
+      }
     }
 
 
