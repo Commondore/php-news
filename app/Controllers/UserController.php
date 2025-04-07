@@ -4,13 +4,16 @@ namespace App\Controllers;
 
 use App\Config\View;
 use App\Models\User;
+use App\Validators\RegisterValidator;
 
 class UserController
 {
   private User $userModel;
+  private RegisterValidator $registerValidator;
 
   public function __construct() {
     $this->userModel = new User();
+    $this->registerValidator = new RegisterValidator();
   }
 
   public function index()

@@ -1,12 +1,22 @@
 {% extends 'layouts/base.twig' %}
 
 {% block content %}
-<div>
-    <h1>Регистрация</h1>
+<div class="max-w-7xl mx-auto">
+    <h1 class="text-center text-4xl my-8">Регистрация</h1>
 
-    <form action="/news.kg/register" method="post">
-        <input type="text" name="name" placeholder="enter name" value="{{ user.name }}">
-        <button>Отправить</button>
-    </form>
+    <div class="max-w-1/3 mx-auto">
+        <form action="/news.kg/register" method="post">
+            <div class="mb-4">
+                <input class="input" type="text" name="name" placeholder="Введите имя" value="{{ user.name }}">
+            </div>
+            <div class="mb-4">
+                <input class="input" type="email" name="email" placeholder="Введите email" value="{{ user.email }}">
+            </div>
+            <div class="mb-4">
+                <input class="input" type="password" name="password" placeholder="Введите пароль" value="{{ user.email }}">
+            </div>
+            <button class="btn w-full">Отправить</button>
+        </form>
+    </div>
 </div>
 {% endblock %}
