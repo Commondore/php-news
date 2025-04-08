@@ -13,5 +13,8 @@ $router->get('/users', [UserController::class, 'index']);
 $router->get('/register', [UserController::class, 'register']);
 $router->post('/register', [UserController::class, 'register']);
 
+$router->get('/login', [UserController::class, 'login']);
+$router->post('/login', [UserController::class, 'login']);
+
 
 return $router;

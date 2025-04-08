@@ -1,0 +1,28 @@
+{% extends 'layouts/base.twig' %}
+
+{% block content %}
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-center text-4xl my-8">Страница авторизации</h1>
+
+        <div class="max-w-1/3 mx-auto">
+            <form action="/news.kg/login" method="post" novalidate>
+                <div class="mb-4">
+                    <input class="input" type="email" name="email" placeholder="Введите email" value="{{ email }}">
+                    {% if errors.email %}
+                        <p class="text-red-600 text-sm mt-1 ml-2">{{ errors.email }}</p>
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    <input class="input" type="password" name="password" placeholder="Введите пароль">
+                    {% if errors.password %}
+                        <p class="text-red-600 text-sm mt-1 ml-2">{{ errors.password }}</p>
+                    {% endif %}
+                </div>
+                <button class="btn w-full">Отправить</button>
+            </form>
+            <div class="text-center text-sm mt-4">
+                <p>Если у вас нет аккаунта, <a class="text-red-500" href="/news.kg/register">зарегистрируйтесь</a>.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

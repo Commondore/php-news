@@ -16,13 +16,13 @@ class UserController
     $this->registerValidator = new RegisterValidator();
   }
 
-  public function index()
+  public function index(): void
   {
     $users = $this->userModel->getAllUsers();
     View::render('users/index.twig', ['users' => $users]);
   }
 
-  public function register()
+  public function register(): void
   {
     if($_SERVER['REQUEST_METHOD'] === 'GET') {
       View::render('users/register.twig', [
@@ -53,5 +53,14 @@ class UserController
       'email' => $email ?? '',
       'errors' => $errors
     ]);
+  }
+
+  public function login(): void
+  {
+    if($_SERVER['REQUEST_METHOD'] === 'GET') {
+      View::render('users/login.twig', [
+        'errors' => []
+      ]);
+    }
   }
 }
