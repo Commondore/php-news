@@ -1,0 +1,6 @@
+<div class="mb-4">
+    <input class="input {{ errorClass(name) }}" type="{{ type|default('text') }}" name="{{ name }}"  id="{{ name }}" placeholder="{{ placeholder }}" value="{{ old(name, value|default('')) }}" {{ attrs|raw }}>
+    {% if hasError(name) %}
+        <p class="text-red-600 text-sm mt-1 ml-2">{{ error(name) }}</p>
+    {% endif %}
+</div>

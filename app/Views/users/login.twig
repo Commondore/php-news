@@ -6,18 +6,8 @@
 
         <div class="max-w-1/3 mx-auto">
             <form action="/login" method="post" novalidate autocomplete="off">
-                <div class="mb-4">
-                    <input class="input {{ errorClass('email') }}" type="email" name="email" placeholder="Введите email" value="{{ old('email') }}">
-                    {% if hasError('email') %}
-                        <p class="text-red-600 text-sm mt-1 ml-2">{{ error('email') }}</p>
-                    {% endif %}
-                </div>
-                <div class="mb-4">
-                    <input class="input {{ errorClass('password') }}" type="password" name="password" placeholder="Введите пароль" value="{{ old('password') }}">
-                    {% if hasError('password') %}
-                        <p class="text-red-600 text-sm mt-1 ml-2">{{ error('password') }}</p>
-                    {% endif %}
-                </div>
+                {% include 'components/form/input.twig' with { name: 'email', type: 'email', placeholder: 'Введите email'} %}
+                {% include 'components/form/input.twig' with { name: 'password', type: 'password', placeholder: 'Введите пароль'} %}
                 <button class="btn w-full">Отправить</button>
             </form>
             <div class="text-center text-sm mt-4">
