@@ -20,7 +20,7 @@ class User
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function createUser($name, $email, $password)
+  public function createUser($name, $email, $password): bool
   {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
@@ -31,5 +31,13 @@ class User
       ':email' => $email,
       ':password' => $hashedPassword
     ]);
+  }
+
+  public function getUser(string $email)
+  {
+    $sql = 'SELECT * FROM users WHERE email = :email';
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([':email' => $email]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
   }
 }

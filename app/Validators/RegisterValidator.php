@@ -2,9 +2,7 @@
 
 namespace App\Validators;
 
-class RegisterValidator implements ValidatorInterface {
-
-  private array $errors = [];
+class RegisterValidator extends Validator {
 
   public function validate(array $data): array
   {
@@ -13,16 +11,6 @@ class RegisterValidator implements ValidatorInterface {
     $this->validatePassword($data['password']);
 
     return $this->errors;
-  }
-
-  public function getErrors(): array
-  {
-    return $this->errors;
-  }
-
-  public function getError(string $field): string
-  {
-    return $this->errors[$field] ?? '';
   }
 
   private function validateName(?string $name): void
@@ -62,7 +50,6 @@ class RegisterValidator implements ValidatorInterface {
     if(!preg_match('/[A-Z]/', $password)) {
       $this->errors['password'] = 'Пароль должен содержать хотя бы одну заглавную букву';
     }
-
 
   }
 

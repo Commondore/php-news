@@ -4,15 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
 <body>
-    {% include 'layouts/navbar.twig' %}
-    {% block content %}{% endblock %}
+
+    {% set success = flash_peek('success') %}
+    {% if success %}
+        <div class="flash-message fixed top-4 right-4 z-50 bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded-xl shadow-lg transition-opacity duration-300">
+            {{ success }}
+        </div>
+    {% endif %}
+
+    {% set error = flash_peek('error') %}
+    {% if error %}
+        <div class="flash-message fixed top-4 right-4 z-50 bg-red-100 border border-red-300 text-red-800 px-4 py-3 rounded-xl shadow-lg transition-opacity duration-300">
+            {{ error }}
+        </div>
+    {% endif %}
+
+
+    <div class="flex flex-col h-screen">
+        {% include 'layouts/navbar.twig' %}
+        <div class="flex-grow-1">{% block content %}{% endblock %}</div>
+        {% include 'layouts/footer.twig' %}
+    </div>
+
+    <script src="/assets/js/main.js"></script>
 </body>
 
 </html>

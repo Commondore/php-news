@@ -7,21 +7,21 @@
     <div class="max-w-1/3 mx-auto">
         <form action="/register" method="post" novalidate>
             <div class="mb-4">
-                <input class="input" type="text" name="name" placeholder="Введите имя" value="{{ name }}">
-                {% if errors.name %}
-                    <p class="text-red-600 text-sm mt-1 ml-2">{{ errors.name }}</p>
+                <input class="input" type="text" name="name" placeholder="Введите имя" value="{{ old('name') }}">
+                {% if hasError('name') %}
+                    <p class="text-red-600 text-sm mt-1 ml-2">{{ error('name') }}</p>
                 {% endif %}
             </div>
             <div class="mb-4">
-                <input class="input" type="email" name="email" placeholder="Введите email" value="{{ email }}">
-                {% if errors.email %}
-                    <p class="text-red-600 text-sm mt-1 ml-2">{{ errors.email }}</p>
+                <input class="input" type="email" name="email" placeholder="Введите email" value="{{ old('email') }}">
+                {% if hasError('email') %}
+                    <p class="text-red-600 text-sm mt-1 ml-2">{{ error('email') }}</p>
                 {% endif %}
             </div>
             <div class="mb-4">
                 <input class="input" type="password" name="password" placeholder="Введите пароль">
-                {% if errors.password %}
-                    <p class="text-red-600 text-sm mt-1 ml-2">{{ errors.password }}</p>
+                {% if hasError('password') %}
+                    <p class="text-red-600 text-sm mt-1 ml-2">{{ error('password') }}</p>
                 {% endif %}
             </div>
             <button class="btn w-full">Отправить</button>

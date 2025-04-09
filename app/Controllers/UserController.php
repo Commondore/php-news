@@ -3,17 +3,22 @@
 namespace App\Controllers;
 
 use App\Config\View;
+use App\Helpers\Flash;
 use App\Models\User;
+use App\Validators\LoginValidator;
 use App\Validators\RegisterValidator;
 
 class UserController
 {
   private User $userModel;
   private RegisterValidator $registerValidator;
+  private LoginValidator $loginValidator;
 
-  public function __construct() {
+  public function __construct()
+  {
     $this->userModel = new User();
     $this->registerValidator = new RegisterValidator();
+    $this->loginValidator = new LoginValidator();
   }
 
   public function index(): void
@@ -24,43 +29,55 @@ class UserController
 
   public function register(): void
   {
-    if($_SERVER['REQUEST_METHOD'] === 'GET') {
-      View::render('users/register.twig', [
-        'name' => '',
-        'email' => '',
-        'errors' => []
-      ]);
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+      View::render('users/register.twig');
       return;
     }
-
-    $name = $_POST['name'] ?? null;
-    $email = $_POST['email'] ?? null;
-    $password = $_POST['password'] ?? null;
 
 
     $errors = $this->registerValidator->validate($_POST);
 
-    if(empty($errors)) {
+    if (empty($errors)) {
+      $name = $_POST['name'] ?? null;
+      $email = $_POST['email'] ?? null;
+      $password = $_POST['password'] ?? null;
+
       $user = $this->userModel->createUser($name, $email, $password);
-      if($user) {
+      if ($user) {
         header('Location: /news.kg/login');
       }
+    } else {
+      Flash::set('error', 'Ошибка Регистрации');
+      Flash::set('errors', $errors);
+      Flash::setOld($_POST);
+      header('Location: /register');
+      exit;
     }
 
 
-    View::render('users/register.twig', [
-      'name' => $name ?? '',
-      'email' => $email ?? '',
-      'errors' => $errors
-    ]);
+    View::render('users/register.twig');
   }
 
   public function login(): void
   {
-    if($_SERVER['REQUEST_METHOD'] === 'GET') {
-      View::render('users/login.twig', [
-        'errors' => []
-      ]);
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+      View::render('users/login.twig');
+      return;
     }
+
+    $errors = $this->loginValidator->validate($_POST);
+
+    if (!empty($errors)) {
+      Flash::set('error', 'Ошибка авторизации');
+      Flash::set('errors', $errors);
+      Flash::setOld($_POST);
+      header('Location: /login');
+      exit;
+    }
+
+    $email = $_POST['email'] ?? null;
+    $password = $_POST['password'] ?? null;
+
+    View::render('users/login.twig');
   }
 }
