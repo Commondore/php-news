@@ -2,6 +2,7 @@
 
 namespace App\Config;
 
+use App\Helpers\Auth;
 use App\Helpers\Flash;
 use App\Helpers\FormHelper;
 use Twig\Environment;
@@ -42,6 +43,9 @@ class View
       self::$twig->addFunction(new TwigFunction('checked', fn($field, $value) => FormHelper::checked($field, $value)));
       self::$twig->addFunction(new TwigFunction('selected', fn($field, $value) => FormHelper::selected($field, $value)));
       self::$twig->addFunction(new TwigFunction('textarea', fn($field, $default = '') => FormHelper::textarea($field, $default)));
+
+      self::$twig->addFunction(new TwigFunction('is_auth', fn () => Auth::check()));
+      self::$twig->addFunction(new TwigFunction('auth_user', fn () => Auth::user()));
     }
 
     echo self::$twig->render($template, $data);

@@ -26,6 +26,7 @@ $router->post('/login', [UserController::class, 'login']);
 
 $router->group(['before' => 'auth'], function ($router) {
   $router->get('/users', [UserController::class, 'index']);
+  $router->get('/logout', [UserController::class, 'logout']);
 });
 
 

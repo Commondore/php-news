@@ -3,10 +3,12 @@
 namespace App\Controllers;
 
 use App\Config\View;
+use App\Helpers\Auth;
 use App\Helpers\Flash;
 use App\Models\User;
 use App\Validators\LoginValidator;
 use App\Validators\RegisterValidator;
+use JetBrains\PhpStorm\NoReturn;
 
 class UserController
 {
@@ -78,6 +80,28 @@ class UserController
     $email = $_POST['email'] ?? null;
     $password = $_POST['password'] ?? null;
 
-    View::render('users/login.twig');
+    $user = $this->userModel->getUser($email);
+
+    if(!$user || !password_verify($password, $user['password'])) {
+      Flash::set('error', 'Неверный логин или пароль');
+      Flash::set('old', $_POST);
+      header('Location: /login');
+      exit;
+    }
+
+    Auth::login($user);
+
+    Flash::set('success', 'Добро пожаловать, ' . $user['name']);
+    header('Location: /');
+    exit;
+  }
+
+  #[NoReturn] public function logout(): void
+  {
+    Auth::logout();
+
+    Flash::set('success', 'Вы вышли из системы');
+    header('Location: /login');
+    exit;
   }
 }

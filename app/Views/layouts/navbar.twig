@@ -12,13 +12,19 @@
             </div>
 
             <div class="flex items-center space-x-4">
-                <a href="/login"
-                    class="text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                    Войти
-                </a>
-                <a href="/register" class="btn">
-                    Регистрация
-                </a>
+                {% if is_auth() %}
+                    <a href="/logout" class="btn">
+                        Выйти
+                    </a>
+                {% else %}
+                    <a href="/login"
+                        class="text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        Войти
+                    </a>
+                    <a href="/register" class="btn">
+                        Регистрация
+                    </a>
+                {% endif %}
             </div>
         </div>
     </div>
