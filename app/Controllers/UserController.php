@@ -4,10 +4,12 @@ namespace App\Controllers;
 
 use App\Config\View;
 use App\Helpers\Auth;
+use App\Helpers\AuthApi;
 use App\Helpers\Flash;
 use App\Models\User;
 use App\Validators\LoginValidator;
 use App\Validators\RegisterValidator;
+use Firebase\JWT\JWT;
 use JetBrains\PhpStorm\NoReturn;
 
 class UserController
@@ -82,14 +84,28 @@ class UserController
 
     $user = $this->userModel->getUser($email);
 
-    if(!$user || !password_verify($password, $user['password'])) {
+    if (!$user || !password_verify($password, $user['password'])) {
       Flash::set('error', 'Неверный логин или пароль');
       Flash::set('old', $_POST);
       header('Location: /login');
       exit;
     }
 
-    Auth::login($user);
+    $payload = [
+      'id' => $user['id'],
+      'email' => $user['email'],
+      'name' => $user['name'],
+      'exp' => time() + 3600,
+    ];
+
+    $jwt = JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
+
+    setcookie('token', $jwt, [
+      'httponly' => true,
+      'secure' => true,
+      'samesite' => 'Lax',
+      'path' => '/',
+    ]);
 
     Flash::set('success', 'Добро пожаловать, ' . $user['name']);
     header('Location: /');
@@ -103,5 +119,20 @@ class UserController
     Flash::set('success', 'Вы вышли из системы');
     header('Location: /login');
     exit;
+  }
+
+  public function me(): void
+  {
+    header('Content-Type: application/json');
+    $user = AuthApi::user();
+
+    echo json_encode([
+      'success' => true,
+      'data' => [
+        'id' => $user['id'],
+        'email' => $user['email'],
+        'name' => $user['name'],
+      ]
+    ]);
   }
 }

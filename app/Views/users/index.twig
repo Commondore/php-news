@@ -18,5 +18,15 @@
         {% endfor %}
     </ul>
 
+    <script>
+        const getMe = async () => {
+            const user = await fetch('/api/me', {
+                credentials: 'include'
+            }).then(res => res.json());
+
+            console.log(user)
+        }
+        getMe();
+    </script>
 </body>
 </html>
