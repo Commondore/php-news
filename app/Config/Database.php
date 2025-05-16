@@ -13,10 +13,6 @@ class Database
     {
         if (self::$instance === null) {
             try {
-                // Загружаем .env переменные
-                $rootPath = dirname(__DIR__, 2); // путь до корня проекта
-                $dotenv = \Dotenv\Dotenv::createImmutable($rootPath);
-                $dotenv->load();
 
                 $host = $_ENV['DB_HOST'];
                 $port = $_ENV['DB_PORT'];

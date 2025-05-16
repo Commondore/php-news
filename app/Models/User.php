@@ -32,4 +32,12 @@ class User
       ':password' => $hashedPassword
     ]);
   }
+
+  public function getUserByEmail(string $email)
+  {
+    $stmt = $this->db->prepare('SELECT * FROM users WHERE email = :email');
+    $stmt->execute(['email' => $email]);
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+  }
 }
